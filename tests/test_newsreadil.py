@@ -9,6 +9,11 @@ import re
 import pytest
 
 def test_linkcategory():
-    expected = 'gdkkn'
-    actual = linkcategory('indonesia', key)
-    assert actual == expected
+    act = newsreadil.linkcategory()
+    expected = pd.read_pickle(df[['title', 'url', 'read_category']])
+    assert expected.equals(act), "no result found"
+
+def test_newarticle():
+    act = newsreadil.newarticle()
+    expected = pd.read_pickle(df.groupby(['title','url', 'source.name']).release.max())
+    assert expected.equals(act), "no result found"

@@ -25,8 +25,8 @@ key = os.getenv('API_KEY')
 
 def linkcategory(topic, key):
     """
-        This function obtain table for headline article of specific topic and calculate how easy-to-read each article for users.
-        Readibility score calculation is inspired by `Flesch Kincaid Grade readibility score <https://readable.com/readability/flesch-reading-ease flesch-kincaid-grade-level/>`_
+    This function obtain table for headline article of specific topic and calculate how easy-to-read each article for users.
+    Readibility score calculation is inspired by `Flesch Kincaid Grade readibility score <https://readable.com/readability/flesch-reading-ease flesch-kincaid-grade-level/>`_
         
         Returns
         -------
@@ -44,7 +44,7 @@ def linkcategory(topic, key):
         2	Google’s Year in Search 2022 was dominated by ...	https://www.engadget.com/google-year-in-search...	Advanced
         3	World Cup 2022: Welsh anthem praised around th...	https://www.bbc.co.uk/news/uk-wales-63729674	Skilled
         4	World Cup: Shuttle flights cast doubts on carb...	https://www.bbc.co.uk/news/world-63796634	Skilled 
-        """
+    """
     
     url = f'https://newsapi.org/v2/everything?q={topic}&apiKey={key}'
     r = requests.get(url)
@@ -73,13 +73,13 @@ def linkcategory(topic, key):
     else:
         error
 
-    def newarticle(topic, key):
-         """
-        This function obtain table for headline article about specific topic and return the most recent news
+  def newarticle(topic, key):
+    """
+    This function obtain table for headline article about specific topic and return the most recent news
         
-        Returns
-        -------
-          List of the most recent news globally with complete information of title, link to the article, and source    
+    Returns
+    -------
+    List of the most recent news globally with complete information of title, link to the article, and source    
         
         Examples
         --------
@@ -89,11 +89,11 @@ def linkcategory(topic, key):
         'Avatar' star Sam Worthington reveals alcohol addiction: 'Drinking helped me get through the day' - Yahoo Entertainment  https://www.yahoo.com/entertainment/avatar-sam-worthington-alcohol-addiction-sober-fame-205541200.html                                           Yahoo Entertainment         2022-12-15 20:55:41+00:00
         49ers vs. Seahawks odds, line, spread Thursday Night Football picks, NFL predictions from dialed-in model - CBS Sports   https://www.cbssports.com/nfl/news/49ers-vs-seahawks-odds-line-spread-thursday-night-football-picks-nfl-predictions-from-dialed-in-model/        CBS Sports                  2022-12-15 23:51:28+00:00
         Congress votes to remove bust of chief justice who authored Dred Scott decision - Fox News                               https://www.foxnews.com/politics/congress-votes-remove-bust-chief-justice-authored-dred-scott-decision                                           Fox News                    2022-12-15 20:16:19+00:00 
-        """
-        url = f'https://newsapi.org/v2/everything?q={topic}&apiKey={key}'
-        r = requests.get(url)
-        data = r.json()
-        df = pd.json_normalize(data, "articles")
-        df['release'] = pd.to_datetime(df['publishedAt'])
-        release =  df['release']
-            return df.groupby(['title','url', 'source.name']).release.max()
+    """
+    url = f'https://newsapi.org/v2/everything?q={topic}&apiKey={key}'
+    r = requests.get(url)
+    data = r.json()
+    df = pd.json_normalize(data, "articles")
+    df['release'] = pd.to_datetime(df['publishedAt'])
+    release =  df['release']
+    return df.groupby(['title','url', 'source.name']).release.max()
